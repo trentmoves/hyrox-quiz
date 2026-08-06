@@ -1,4 +1,4 @@
-import HyroxQuiz from "./quiz/HyroxQuiz";
+import HyroxQuiz from "./HyroxQuiz";
 
 export default function Page() {
   return <HyroxQuiz />;
