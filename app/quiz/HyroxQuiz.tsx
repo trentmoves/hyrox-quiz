@@ -20,6 +20,7 @@
  */
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   STATION_ORDER,
   STATION_LABELS,
@@ -261,12 +262,12 @@ function Result({ result, onRestart }: { result: Prediction; onRestart: () => vo
       </div>
 
       {/* $250 coaching upsell */}
-      <a
-        href="#coaching"
+      <Link
+        href="/coaching"
         className="block rounded-lg bg-ignite px-4 py-4 text-center font-display text-sm font-extrabold uppercase tracking-[0.04em] text-white"
       >
         Fix {leak ? leak.label.split(" (")[0] : "your weak link"} → get my plan
-      </a>
+      </Link>
       <button
         onClick={onRestart}
         className="mt-3 w-full text-center font-data text-xs uppercase tracking-[0.2em] text-steel transition hover:text-bone"
