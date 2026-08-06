@@ -52,15 +52,15 @@ export default function Page() {
 function Nav() {
   return (
     <header className="border-b border-line">
-      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 px-5 py-4">
-        <Link href="/" aria-label="Hyrox Human — home">
+      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-5 sm:gap-6 sm:py-6">
+        <Link href="/" aria-label="Hyrox Human — home" className="shrink-0">
           <Image
             src="/logos/svg/03-lockup-ondark.svg"
             alt="Hyrox Human"
-            width={80}
-            height={30}
+            width={117}
+            height={44}
             priority
-            className="h-[30px] w-auto"
+            className="h-9 w-auto sm:h-11"
           />
         </Link>
         {/* Nav labels drop off on narrow screens — the CTA carries the flow there. */}

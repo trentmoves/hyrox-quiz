@@ -152,18 +152,20 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 function Nav() {
   return (
     <header className="border-b border-line">
-      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 px-5 py-4">
-        <Link href="/" aria-label="Hyrox Human — home">
+      <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-5 py-5 sm:gap-6 sm:py-6">
+        <Link href="/" aria-label="Hyrox Human — home" className="shrink-0">
           <Image
             src="/logos/svg/03-lockup-ondark.svg"
             alt="Hyrox Human"
-            width={70}
-            height={26}
+            width={117}
+            height={44}
             priority
-            className="h-[26px] w-auto"
+            className="h-9 w-auto sm:h-11"
           />
         </Link>
-        <BookButton className="px-4 py-2.5 text-xs" />
+        {/* Tighter padding on mobile so the larger logo and the button never
+            collide at 375px — the logo keeps its size, the button gives. */}
+        <BookButton className="shrink-0 px-3 py-2.5 text-[11px] whitespace-nowrap sm:px-4 sm:text-xs" />
       </nav>
     </header>
   );
