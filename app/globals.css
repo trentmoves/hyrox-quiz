@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
+/* ---- Hyrox Human brand tokens (see brand-system.html) ---- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ignite: #ff4127;
+  --carbon: #14171a;
+  --carbon-2: #1d2228;
+  --bone: #f6f1e9;
+  --steel: #5b6670;
+  --frost: #38c0e0;
+  --line: rgba(246, 241, 233, 0.12);
+
+  --background: var(--carbon);
+  --foreground: var(--bone);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ignite: var(--ignite);
+  --color-carbon: var(--carbon);
+  --color-carbon-2: var(--carbon-2);
+  --color-bone: var(--bone);
+  --color-steel: var(--steel);
+  --color-frost: var(--frost);
+  --color-line: var(--line);
+
+  /* Inter is the body default; Archivo shouts; Space Mono holds the numbers.
+     The mono theme key is --font-data, not --font-mono, because --font-mono is
+     already the next/font variable name and would self-reference here. */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-archivo);
+  --font-data: var(--font-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--carbon);
+  color: var(--bone);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.55;
 }

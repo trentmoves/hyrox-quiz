@@ -12,6 +12,11 @@
  * Users skip stations they don't know; the engine estimates those and widens
  * the predicted range. The result leads with the biggest time leak, since
  * that's the part that sells the coaching plan.
+ *
+ * Styling follows the brand system in brand-system.html:
+ * Ignite for buttons and selected states only, Frost + Space Mono for every
+ * number, Carbon-2 cards on a Carbon page, Steel for muted labels, Bone for
+ * primary text, Archivo 900 uppercase for headings and the wordmark.
  */
 
 import { useState } from "react";
@@ -33,7 +38,8 @@ const AGE_BRACKETS: AgeBracket[] = [
 
 type StationEntry = { known: boolean; value: string };
 
-const YELLOW = "#D7F205"; // signal-lime accent; swap for your @hyroxhuman brand color
+/** Space Mono, uppercase, wide tracking — the eyebrow/utility label treatment. */
+const EYEBROW = "font-data text-[11px] uppercase tracking-[0.28em] text-steel";
 
 export default function HyroxQuiz() {
   const [step, setStep] = useState(0);
@@ -82,7 +88,7 @@ export default function HyroxQuiz() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-xl px-5 py-10 text-neutral-100">
+    <div className="mx-auto w-full max-w-xl px-5 py-10 text-bone">
       <Header step={step} />
 
       {step === 0 && (
@@ -108,12 +114,11 @@ export default function HyroxQuiz() {
                 <button
                   key={a}
                   onClick={() => setAge(a)}
-                  className={`rounded-md border px-2 py-2 font-mono text-sm transition ${
+                  className={`rounded-md border px-2 py-2 font-data text-sm transition ${
                     age === a
-                      ? "border-transparent bg-[var(--acc)] text-black"
-                      : "border-neutral-700 text-neutral-300 hover:border-neutral-500"
+                      ? "border-transparent bg-ignite text-white"
+                      : "border-line text-steel hover:border-bone/30 hover:text-bone"
                   }`}
-                  style={{ ["--acc" as string]: YELLOW }}
                 >
                   {a}
                 </button>
@@ -127,7 +132,7 @@ export default function HyroxQuiz() {
       {step === 1 && (
         <Card>
           <Legend n="02" title="Run pace" />
-          <p className="mb-4 text-sm text-neutral-400">
+          <p className="mb-4 text-sm text-steel">
             Your average per-kilometre pace across the 8 race runs, under fatigue,
             not a fresh 5K. Format M:SS.
           </p>
@@ -137,8 +142,7 @@ export default function HyroxQuiz() {
               onChange={(e) => setPace(e.target.value)}
               placeholder="4:20"
               inputMode="numeric"
-              className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-3 font-mono text-lg text-neutral-100 outline-none focus:border-[var(--acc)]"
-              style={{ ["--acc" as string]: YELLOW }}
+              className="w-full rounded-md border border-line bg-carbon px-3 py-3 font-data text-lg text-frost outline-none transition placeholder:text-steel focus:border-ignite"
             />
           </Field>
           <div className="flex gap-3">
@@ -151,7 +155,7 @@ export default function HyroxQuiz() {
       {step === 2 && (
         <Card>
           <Legend n="03" title="Station splits" />
-          <p className="mb-4 text-sm text-neutral-400">
+          <p className="mb-4 text-sm text-steel">
             Toggle on the stations you know and enter your split. Skip the rest,
             we estimate those and widen your range.
           </p>
@@ -162,24 +166,21 @@ export default function HyroxQuiz() {
               return (
                 <div
                   key={k}
-                  className="flex items-center gap-3 rounded-md border border-neutral-800 px-3 py-2"
+                  className="flex items-center gap-3 rounded-md border border-line px-3 py-2"
                 >
                   <button
                     onClick={() => updateStation(k, { known: !s.known })}
                     aria-pressed={s.known}
                     className={`h-5 w-5 shrink-0 rounded border transition ${
-                      s.known
-                        ? "border-transparent bg-[var(--acc)]"
-                        : "border-neutral-600"
+                      s.known ? "border-transparent bg-ignite" : "border-steel"
                     }`}
-                    style={{ ["--acc" as string]: YELLOW }}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="truncate text-sm text-neutral-200">
+                    <div className="truncate text-sm text-bone">
                       {STATION_LABELS[k]}
                     </div>
                     {load && (
-                      <div className="font-mono text-xs text-neutral-500">{load} kg</div>
+                      <div className="font-data text-xs text-frost">{load} kg</div>
                     )}
                   </div>
                   <input
@@ -187,15 +188,14 @@ export default function HyroxQuiz() {
                     onChange={(e) => updateStation(k, { value: e.target.value, known: true })}
                     placeholder="M:SS"
                     inputMode="numeric"
-                    className="w-20 rounded border border-neutral-700 bg-neutral-950 px-2 py-1.5 text-center font-mono text-sm text-neutral-100 outline-none focus:border-[var(--acc)] disabled:opacity-30"
-                    style={{ ["--acc" as string]: YELLOW }}
+                    className="w-20 rounded border border-line bg-carbon px-2 py-1.5 text-center font-data text-sm text-frost outline-none transition placeholder:text-steel focus:border-ignite disabled:opacity-30"
                     disabled={!s.known}
                   />
                 </div>
               );
             })}
           </div>
-          {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
+          {error && <p className="mt-3 text-sm text-ignite">{error}</p>}
           <div className="mt-5 flex gap-3">
             <Back onClick={() => setStep(1)} />
             <Next onClick={run} label="Predict my race time" />
@@ -220,46 +220,38 @@ function Result({ result, onRestart }: { result: Prediction; onRestart: () => vo
       <Legend n="→" title="Your projected race" />
 
       <div className="mb-6">
-        <div className="text-xs uppercase tracking-widest text-neutral-500">
-          Predicted finish
-        </div>
-        <div
-          className="font-mono text-4xl font-bold"
-          style={{ color: YELLOW }}
-        >
+        <div className={EYEBROW}>Predicted finish</div>
+        <div className="mt-2 font-data text-4xl font-bold text-frost">
           {lo} – {hi}
         </div>
-        <div className="mt-1 text-sm text-neutral-400">
-          Midpoint {result.predictedClock} · {result.percentile}th percentile ·{" "}
-          <span className="text-neutral-200">{result.level}</span> in your division
+        <div className="mt-2 text-sm text-steel">
+          Midpoint <span className="font-data text-frost">{result.predictedClock}</span> ·{" "}
+          <span className="font-data text-frost">{result.percentile}th</span> percentile ·{" "}
+          <span className="text-bone">{result.level}</span> in your division
           and age group
         </div>
       </div>
 
       {leak && (
-        <div className="mb-6 rounded-md border border-neutral-800 bg-neutral-950 p-4">
-          <div className="text-xs uppercase tracking-widest text-neutral-500">
-            Biggest time leak
-          </div>
-          <div className="mt-1 text-lg text-neutral-100">{leak.label}</div>
-          <div className="font-mono text-sm text-neutral-400">
+        <div className="mb-6 rounded-md border border-line bg-carbon p-4">
+          <div className={EYEBROW}>Biggest time leak</div>
+          <div className="mt-2 text-lg text-bone">{leak.label}</div>
+          <div className="font-data text-sm text-frost">
             +{Math.round(leak.deviationSeconds)}s slower than the Strong band
           </div>
         </div>
       )}
 
       <div className="mb-6">
-        <div className="mb-2 text-xs uppercase tracking-widest text-neutral-500">
-          Station read-out
-        </div>
+        <div className={`${EYEBROW} mb-2`}>Station read-out</div>
         <div className="space-y-1">
           {result.stationDiagnostics.map((d) => (
-            <div key={d.key} className="flex items-center justify-between font-mono text-sm">
-              <span className="text-neutral-300">
+            <div key={d.key} className="flex items-center justify-between text-sm">
+              <span className="text-bone">
                 {STATION_LABELS[d.key]}
-                {d.estimated && <span className="text-neutral-600"> (est.)</span>}
+                {d.estimated && <span className="text-steel"> (est.)</span>}
               </span>
-              <span className={d.atOrBetterThanStrong ? "text-[color:var(--good)]" : "text-neutral-400"} style={{ ["--good" as string]: YELLOW }}>
+              <span className="font-data text-frost">
                 {toClock(d.splitSeconds)}{" "}
                 {d.atOrBetterThanStrong ? "✓" : `+${Math.round(d.deviationSeconds)}s`}
               </span>
@@ -271,20 +263,19 @@ function Result({ result, onRestart }: { result: Prediction; onRestart: () => vo
       {/* $250 coaching upsell */}
       <a
         href="#coaching"
-        className="block rounded-md px-4 py-3 text-center font-semibold text-black"
-        style={{ backgroundColor: YELLOW }}
+        className="block rounded-lg bg-ignite px-4 py-4 text-center font-display text-sm font-extrabold uppercase tracking-[0.04em] text-white"
       >
         Fix {leak ? leak.label.split(" (")[0] : "your weak link"} → get my plan
       </a>
       <button
         onClick={onRestart}
-        className="mt-3 w-full text-center text-sm text-neutral-500 hover:text-neutral-300"
+        className="mt-3 w-full text-center font-data text-xs uppercase tracking-[0.2em] text-steel transition hover:text-bone"
       >
         Start over
       </button>
 
       {result.notes.length > 0 && (
-        <ul className="mt-4 space-y-1 text-xs text-neutral-600">
+        <ul className="mt-4 space-y-1 text-xs text-steel">
           {result.notes.map((n, i) => (
             <li key={i}>· {n}</li>
           ))}
@@ -299,10 +290,10 @@ function Result({ result, onRestart }: { result: Prediction; onRestart: () => vo
 function Header({ step }: { step: number }) {
   return (
     <div className="mb-6 flex items-baseline justify-between">
-      <span className="font-mono text-sm uppercase tracking-[0.2em] text-neutral-500">
+      <span className="font-display text-xl font-black uppercase tracking-[-0.01em] text-bone">
         Hyrox Human
       </span>
-      <span className="font-mono text-xs text-neutral-600">
+      <span className="font-data text-xs uppercase tracking-[0.28em] text-steel">
         {step < 3 ? `${step + 1} / 3` : "result"}
       </span>
     </div>
@@ -311,7 +302,7 @@ function Header({ step }: { step: number }) {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+    <div className="rounded-xl border border-line bg-carbon-2 p-6">
       {children}
     </div>
   );
@@ -320,8 +311,10 @@ function Card({ children }: { children: React.ReactNode }) {
 function Legend({ n, title }: { n: string; title: string }) {
   return (
     <div className="mb-5 flex items-center gap-3">
-      <span className="font-mono text-sm text-neutral-600">{n}</span>
-      <h2 className="text-lg font-semibold tracking-tight text-neutral-100">{title}</h2>
+      <span className="font-data text-xs uppercase tracking-[0.28em] text-steel">{n}</span>
+      <h2 className="font-display text-lg font-black uppercase tracking-[-0.01em] text-bone">
+        {title}
+      </h2>
     </div>
   );
 }
@@ -329,7 +322,7 @@ function Legend({ n, title }: { n: string; title: string }) {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-5">
-      <div className="mb-2 text-xs uppercase tracking-widest text-neutral-500">{label}</div>
+      <div className={`${EYEBROW} mb-2`}>{label}</div>
       {children}
     </div>
   );
@@ -352,10 +345,9 @@ function Segmented({
           onClick={() => onChange(o)}
           className={`flex-1 rounded-md border px-3 py-2 text-sm transition ${
             value === o
-              ? "border-transparent bg-[var(--acc)] text-black"
-              : "border-neutral-700 text-neutral-300 hover:border-neutral-500"
+              ? "border-transparent bg-ignite font-semibold text-white"
+              : "border-line text-steel hover:border-bone/30 hover:text-bone"
           }`}
-          style={{ ["--acc" as string]: YELLOW }}
         >
           {o}
         </button>
@@ -368,8 +360,7 @@ function Next({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
       onClick={onClick}
-      className="mt-2 flex-1 rounded-md px-4 py-3 text-center font-semibold text-black"
-      style={{ backgroundColor: YELLOW }}
+      className="mt-2 flex-1 rounded-lg bg-ignite px-4 py-3.5 text-center font-display text-sm font-extrabold uppercase tracking-[0.04em] text-white"
     >
       {label}
     </button>
@@ -380,7 +371,7 @@ function Back({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="mt-2 rounded-md border border-neutral-700 px-4 py-3 text-sm text-neutral-300 hover:border-neutral-500"
+      className="mt-2 rounded-lg border border-line px-4 py-3.5 font-display text-sm font-extrabold uppercase tracking-[0.04em] text-bone transition hover:border-bone/30"
     >
       Back
     </button>

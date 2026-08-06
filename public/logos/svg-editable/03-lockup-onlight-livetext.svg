@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.40 11.60 268.80 100.80" width="268.80" height="100.80">
+<!-- Live text. Requires Archivo (400/600/800/900) and Space Mono. Outlined versions are in /svg. -->
+<rect x="14" y="30" width="15" height="66" rx="2" fill="#14171A"/>
+<rect x="64" y="30" width="15" height="66" rx="2" fill="#14171A"/>
+<polyline points="29,63 39,63 44,63 49,48 55,82 60,55 65,63" fill="none" stroke="#FF4127" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="100" y1="26" x2="100" y2="98" stroke="#14171A" stroke-opacity=".22" stroke-width="1.5"/>
+<text x="120" y="58" font-family="Archivo" font-weight="900" font-size="34" letter-spacing="-.5" fill="#14171A">HYROX</text>
+<text x="120" y="92" font-family="Archivo" font-weight="600" font-size="21" letter-spacing="7.5" fill="#FF4127">HUMAN</text>
+</svg>

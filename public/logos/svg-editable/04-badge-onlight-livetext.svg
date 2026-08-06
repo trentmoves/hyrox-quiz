@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.28 -1.28 182.56 182.56" width="182.56" height="182.56">
+<!-- Live text. Requires Archivo (400/600/800/900) and Space Mono. Outlined versions are in /svg. -->
+<defs>
+<path id="topArc" d="M 30 90 A 60 60 0 0 1 150 90"/>
+<path id="botArc" d="M 36 90 A 54 54 0 0 0 144 90"/>
+</defs>
+<circle cx="90" cy="90" r="80" fill="none" stroke="#14171A" stroke-width="3"/>
+<circle cx="90" cy="90" r="72" fill="none" stroke="#FF4127" stroke-width="1.5"/>
+<text font-family="Archivo" font-weight="800" font-size="16" letter-spacing="4" fill="#14171A"><textPath href="#topArc" startOffset="50%" text-anchor="middle">HYROX HUMAN</textPath></text>
+<text font-family="Space Mono" font-size="10" letter-spacing="3" fill="#5B6670"><textPath href="#botArc" startOffset="50%" text-anchor="middle">BOULDER &#183; COLORADO</textPath></text>
+<rect x="70" y="66" width="12" height="52" rx="1.5" fill="#14171A"/>
+<rect x="108" y="66" width="12" height="52" rx="1.5" fill="#14171A"/>
+<polyline points="82,92 89,92 93,92 97,80 103,106 108,86 112,92" fill="none" stroke="#FF4127" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="52" cy="90" r="2.5" fill="#FF4127"/>
+<circle cx="128" cy="90" r="2.5" fill="#FF4127"/>
+</svg>
