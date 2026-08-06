@@ -42,6 +42,16 @@ type StationEntry = { known: boolean; value: string };
 /** Space Mono, uppercase, wide tracking — the eyebrow/utility label treatment. */
 const EYEBROW = "font-data text-[11px] uppercase tracking-[0.28em] text-steel";
 
+/** Apps Script webhook that records the lead and sends the race-prep guide. */
+const LEAD_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbz5HpFuA5YqR8yoPdLgDvZfVWYvxAFXsCUwAm8_KZVveNHfDhNBcO9vk4FPgi067AfQfA/exec";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** Shared input treatment — Carbon field, --line border, Frost mono value. */
+const INPUT_CLASS =
+  "w-full rounded-md border border-line bg-carbon px-3 py-3 font-data text-base text-frost outline-none transition placeholder:text-steel focus:border-ignite";
+
 export default function HyroxQuiz() {
   const [step, setStep] = useState(0);
   const [division, setDivision] = useState<Division>("Open");
@@ -57,6 +67,9 @@ export default function HyroxQuiz() {
   );
   const [result, setResult] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   function updateStation(key: StationKey, patch: Partial<StationEntry>) {
     setStations((s) => ({ ...s, [key]: { ...s[key], ...patch } }));
@@ -83,8 +96,52 @@ export default function HyroxQuiz() {
     }
   }
 
+  /**
+   * Gate submit: validate, fire the lead POST, then show the result.
+   * The request is deliberately not awaited — an opaque no-cors response tells
+   * us nothing anyway, so making the athlete wait on it buys us nothing.
+   */
+  function submitLead() {
+    if (!result) return;
+
+    const trimmedEmail = email.trim();
+    if (!EMAIL_RE.test(trimmedEmail)) {
+      setEmailError("Enter a valid email address.");
+      return;
+    }
+    setEmailError(null);
+
+    const payload = {
+      email: trimmedEmail,
+      firstName: firstName.trim(),
+      division,
+      gender,
+      age,
+      predicted: result.predictedClock,
+      range: result.predictedRangeClock.join("–"),
+      percentile: String(result.percentile),
+      level: result.level,
+      weakest: result.weakestStations[0]?.label ?? "none",
+      stations: result.stationDiagnostics
+        .map((d) => `${STATION_LABELS[d.key]} ${toClock(d.splitSeconds)}`)
+        .join(", "),
+    };
+
+    void fetch(LEAD_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    }).catch(() => {
+      // Nothing useful to surface — the athlete still gets their result.
+    });
+
+    setStep(4);
+  }
+
   function restart() {
     setResult(null);
+    setEmailError(null);
     setStep(0);
   }
 
@@ -205,9 +262,102 @@ export default function HyroxQuiz() {
       )}
 
       {step === 3 && result && (
+        <EmailGate
+          email={email}
+          firstName={firstName}
+          error={emailError}
+          onEmailChange={setEmail}
+          onFirstNameChange={setFirstName}
+          onSubmit={submitLead}
+        />
+      )}
+
+      {step === 4 && result && (
         <Result result={result} onRestart={restart} />
       )}
     </div>
+  );
+}
+
+/* ---------------- Email gate ---------------- */
+
+function EmailGate({
+  email,
+  firstName,
+  error,
+  onEmailChange,
+  onFirstNameChange,
+  onSubmit,
+}: {
+  email: string;
+  firstName: string;
+  error: string | null;
+  onEmailChange: (v: string) => void;
+  onFirstNameChange: (v: string) => void;
+  onSubmit: () => void;
+}) {
+  return (
+    <Card>
+      <h2 className="font-display text-xl font-black uppercase tracking-[-0.01em] text-bone">
+        Your projection is ready
+      </h2>
+      <p className="mt-3 text-sm text-steel">
+        Enter your email and I&apos;ll send it with your free race-prep guide.
+      </p>
+
+      <form
+        className="mt-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit();
+        }}
+      >
+        <div className="mb-5">
+          <label htmlFor="lead-email" className={`${EYEBROW} mb-2 block`}>
+            Email
+          </label>
+          <input
+            id="lead-email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => onEmailChange(e.target.value)}
+            placeholder="you@example.com"
+            autoComplete="email"
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? "lead-email-error" : undefined}
+            className={INPUT_CLASS}
+          />
+        </div>
+
+        <div className="mb-5">
+          <label htmlFor="lead-first-name" className={`${EYEBROW} mb-2 block`}>
+            First name (optional)
+          </label>
+          <input
+            id="lead-first-name"
+            value={firstName}
+            onChange={(e) => onFirstNameChange(e.target.value)}
+            placeholder="Trent"
+            autoComplete="given-name"
+            className={INPUT_CLASS}
+          />
+        </div>
+
+        {error && (
+          <p id="lead-email-error" className="mb-4 text-sm text-ignite">
+            {error}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-ignite px-4 py-3.5 text-center font-display text-sm font-extrabold uppercase tracking-[0.04em] text-white"
+        >
+          Show my result →
+        </button>
+      </form>
+    </Card>
   );
 }
 
@@ -295,7 +445,7 @@ function Header({ step }: { step: number }) {
         Hyrox Human
       </span>
       <span className="font-data text-xs uppercase tracking-[0.28em] text-steel">
-        {step < 3 ? `${step + 1} / 3` : "result"}
+        {step < 3 ? `${step + 1} / 3` : step === 3 ? "almost there" : "result"}
       </span>
     </div>
   );
