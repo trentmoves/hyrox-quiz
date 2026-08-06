@@ -176,7 +176,7 @@ function Nav() {
 function Hero() {
   return (
     <section className="mx-auto w-full max-w-5xl px-5 pt-16 pb-14 sm:pt-24 sm:pb-20">
-      <p className={`${EYEBROW} text-ignite`}>HYROX Coaching · Boulder, CO</p>
+      <p className={`${EYEBROW} text-ignite`}>HYROX Coaching</p>
       <h1 className="mt-6 font-display text-[clamp(38px,8.5vw,86px)] leading-[0.88] font-black tracking-[-0.02em] uppercase text-bone">
         Coaching built off{" "}
         <span className="text-ignite">your splits.</span>
@@ -328,7 +328,7 @@ function Footer() {
     <footer className="border-t border-line bg-carbon-2">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-5 py-10 font-data text-[11px] uppercase tracking-[0.16em] text-steel sm:flex-row sm:items-center sm:justify-between">
         <span>Hyrox Human</span>
-        <span>@hyroxhuman · Boulder, CO</span>
+        <span>@hyroxhuman</span>
       </div>
     </footer>
   );

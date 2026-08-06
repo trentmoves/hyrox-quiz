@@ -30,7 +30,13 @@ import {
   type Gender,
   type AgeBracket,
 } from "./hyroxBenchmarks";
-import { predict, toClock, type AthleteProfile, type Prediction } from "./scoring";
+import {
+  predict,
+  toClock,
+  toSeconds,
+  type AthleteProfile,
+  type Prediction,
+} from "./scoring";
 
 const AGE_BRACKETS: AgeBracket[] = [
   "16-24", "25-29", "30-34", "35-39", "40-44",
@@ -38,6 +44,12 @@ const AGE_BRACKETS: AgeBracket[] = [
 ];
 
 type StationEntry = { known: boolean; value: string };
+
+/** The engine works in per-km pace; US athletes think in per-mile. */
+const PACE_UNITS = ["min/mi", "min/km"] as const;
+type PaceUnit = (typeof PACE_UNITS)[number];
+
+const KM_PER_MILE = 1.60934;
 
 /** Space Mono, uppercase, wide tracking — the eyebrow/utility label treatment. */
 const EYEBROW = "font-data text-[11px] uppercase tracking-[0.28em] text-steel";
@@ -58,6 +70,7 @@ export default function HyroxQuiz() {
   const [gender, setGender] = useState<Gender>("Men");
   const [age, setAge] = useState<AgeBracket>("30-34");
   const [pace, setPace] = useState("");
+  const [paceUnit, setPaceUnit] = useState<PaceUnit>("min/mi");
   const [stations, setStations] = useState<Record<StationKey, StationEntry>>(
     () =>
       STATION_ORDER.reduce((acc, k) => {
@@ -85,8 +98,18 @@ export default function HyroxQuiz() {
           stationInput[k] = stations[k].value.trim();
         }
       }
+      // The engine only speaks per-km, so a per-mile entry converts first.
+      const trimmedPace = pace.trim();
+      let avgRunPacePerKm: string | undefined;
+      if (trimmedPace) {
+        avgRunPacePerKm =
+          paceUnit === "min/mi"
+            ? toClock(toSeconds(trimmedPace) / KM_PER_MILE)
+            : trimmedPace;
+      }
+
       const prediction = predict(profile, {
-        avgRunPacePerKm: pace.trim() || undefined,
+        avgRunPacePerKm,
         stations: stationInput,
       });
       setResult(prediction);
@@ -191,14 +214,22 @@ export default function HyroxQuiz() {
         <Card>
           <Legend n="02" title="Run pace" />
           <p className="mb-4 text-sm text-steel">
-            Your average per-kilometre pace across the 8 race runs, under fatigue,
-            not a fresh 5K. Format M:SS.
+            Your average pace across the 8 race runs, under fatigue — not a
+            fresh 5K. Don&apos;t know it? Use your recent 5K pace plus 15–30
+            seconds per mile.
           </p>
-          <Field label="Average run pace (per km)">
+          <Field label="Units">
+            <Segmented
+              options={[...PACE_UNITS]}
+              value={paceUnit}
+              onChange={(v) => setPaceUnit(v as PaceUnit)}
+            />
+          </Field>
+          <Field label={`Average run pace (${paceUnit})`}>
             <input
               value={pace}
               onChange={(e) => setPace(e.target.value)}
-              placeholder="4:20"
+              placeholder={paceUnit === "min/mi" ? "7:00" : "4:20"}
               inputMode="numeric"
               className="w-full rounded-md border border-line bg-carbon px-3 py-3 font-data text-lg text-frost outline-none transition placeholder:text-steel focus:border-ignite"
             />
@@ -214,8 +245,9 @@ export default function HyroxQuiz() {
         <Card>
           <Legend n="03" title="Station splits" />
           <p className="mb-4 text-sm text-steel">
-            Toggle on the stations you know and enter your split. Skip the rest,
-            we estimate those and widen your range.
+            Know a split? Toggle it on and enter it. New to HYROX? Skip them all
+            — we&apos;ll estimate from athletes at your level and your range
+            widens to match.
           </p>
           <div className="space-y-2">
             {STATION_ORDER.map((k) => {
