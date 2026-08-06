@@ -116,7 +116,7 @@ function ChipRow() {
     <section className="mx-auto w-full max-w-5xl px-5 pb-14">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Chip label="Projected" value="1:18:25" tone="frost" />
-        <Chip label="Target" value="1:12:00" tone="ignite" />
+        <Chip label="Target" value="1:12:00" tone="bone" />
         <Chip label="Biggest leak" value="Row +43s" tone="frost" />
       </div>
     </section>
@@ -130,7 +130,7 @@ function Chip({
 }: {
   label: string;
   value: string;
-  tone: "frost" | "ignite";
+  tone: "frost" | "bone";
 }) {
   return (
     <div className="rounded-xl border border-line bg-carbon-2 px-5 py-4">
@@ -139,7 +139,7 @@ function Chip({
       </div>
       <div
         className={`mt-1.5 font-data text-2xl font-bold ${
-          tone === "frost" ? "text-frost" : "text-ignite"
+          tone === "frost" ? "text-frost" : "text-bone"
         }`}
       >
         {value}
