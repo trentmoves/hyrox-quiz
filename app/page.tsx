@@ -38,7 +38,6 @@ export default function Page() {
     <main className="flex flex-1 flex-col">
       <Nav />
       <Hero />
-      <ChipRow />
       <PulseDivider />
       <HowItWorks />
       <CoachingBand />
@@ -108,47 +107,6 @@ function Hero() {
         Predict my finish →
       </Link>
     </section>
-  );
-}
-
-/* ---------------- Data chip teaser ---------------- */
-
-function ChipRow() {
-  return (
-    <section className="mx-auto w-full max-w-5xl px-5 pb-14">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <Chip label="Projected" value="1:24:10" tone="frost" />
-        <Chip label="Baseline" value="Measured in one session" tone="ignite" />
-        <Chip label="Your week" value="5 focused hours" tone="frost" />
-      </div>
-    </section>
-  );
-}
-
-function Chip({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: string;
-  tone: "frost" | "bone" | "ignite";
-}) {
-  const toneClass = {
-    frost: "text-frost",
-    bone: "text-bone",
-    ignite: "text-ignite",
-  }[tone];
-
-  return (
-    <div className="rounded-xl border border-line bg-carbon-2 px-5 py-4">
-      <div className="font-data text-[10px] uppercase tracking-[0.2em] text-steel">
-        {label}
-      </div>
-      <div className={`mt-1.5 font-data text-2xl font-bold ${toneClass}`}>
-        {value}
-      </div>
-    </div>
   );
 }
 
