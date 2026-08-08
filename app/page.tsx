@@ -158,11 +158,24 @@ function PulseDivider() {
       preserveAspectRatio="none"
       aria-hidden="true"
     >
+      {/* The dim resting trace sits under the travelling sweep. */}
       <polyline
         points="0,17 380,17 410,17 430,4 455,30 478,9 500,17 620,17 640,17 660,24 680,17 1000,17"
+        pathLength={100}
         fill="none"
-        stroke="#FF4127"
-        strokeWidth="3"
+        stroke="var(--ignite)"
+        strokeOpacity="0.22"
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+      <polyline
+        className="pulse-sweep"
+        points="0,17 380,17 410,17 430,4 455,30 478,9 500,17 620,17 640,17 660,24 680,17 1000,17"
+        pathLength={100}
+        fill="none"
+        stroke="var(--ignite)"
+        strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
