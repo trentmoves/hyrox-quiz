@@ -19,17 +19,17 @@ const STEPS = [
   {
     n: "01",
     title: "Take the quiz",
-    body: "Two minutes. Your division, your honest run pace, and whichever station splits you actually know. Skip the ones you don't.",
+    body: "Your background, your running pace, your race date. Two minutes, no signup. You don't need to know a single station time yet.",
   },
   {
     n: "02",
     title: "Get your number",
-    body: "A predicted finish range, your percentile against your division and age group, and a read-out on all eight stations.",
+    body: "A projected finish modeled against thousands of real races, plus the stations most likely to cost you time.",
   },
   {
     n: "03",
-    title: "Close the gap",
-    body: "We name the station costing you the most time and build the training block that fixes it. No highlight reel, just the work.",
+    title: "Measure & train",
+    body: "We measure your real station times in one session, then a coach builds a plan around your baseline and race date, training you to save seconds at each station and run strong on tired legs.",
   },
 ];
 
@@ -87,23 +87,25 @@ function Hero() {
   return (
     <section className="mx-auto w-full max-w-5xl px-5 pt-16 pb-12 sm:pt-24 sm:pb-16">
       <p className="font-data text-[11px] uppercase tracking-[0.28em] text-ignite">
-        The honest way to HYROX
+        Faster on tired legs
       </p>
       <h1 className="mt-6 font-display text-[clamp(46px,11vw,112px)] leading-[0.86] font-black tracking-[-0.02em] uppercase text-bone">
-        Train Human.
+        Human coaching,
         <br />
-        <span className="text-ignite">Race Hard.</span>
+        <span className="text-ignite">engineered by data.</span>
       </h1>
       <p className="mt-7 max-w-[52ch] text-base text-bone/80 sm:text-lg">
-        Know your real HYROX finish time, find the station quietly costing you
-        the most, and get a plan built off your actual splits — not a generic
-        twelve-week template.
+        Whether it&apos;s your first HYROX or your next PR, the race is won on
+        tired legs. We measure where you stand today, model your finish against
+        thousands of real races, and build a plan around one thing a template
+        can&apos;t: saving time at the stations so you can still run when your
+        legs are shot.
       </p>
       <Link
         href="/quiz"
         className="mt-9 inline-flex items-center gap-2.5 rounded-lg bg-ignite px-6 py-4 font-display text-sm font-extrabold uppercase tracking-[0.04em] text-white transition hover:opacity-90"
       >
-        Get my race time →
+        Predict my finish →
       </Link>
     </section>
   );
@@ -115,9 +117,9 @@ function ChipRow() {
   return (
     <section className="mx-auto w-full max-w-5xl px-5 pb-14">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <Chip label="Projected" value="1:18:25" tone="frost" />
-        <Chip label="Target" value="1:12:00" tone="bone" />
-        <Chip label="Biggest leak" value="Row +43s" tone="frost" />
+        <Chip label="Projected" value="1:24:10" tone="frost" />
+        <Chip label="Baseline" value="Measured in one session" tone="ignite" />
+        <Chip label="Your week" value="5 focused hours" tone="frost" />
       </div>
     </section>
   );
@@ -130,18 +132,20 @@ function Chip({
 }: {
   label: string;
   value: string;
-  tone: "frost" | "bone";
+  tone: "frost" | "bone" | "ignite";
 }) {
+  const toneClass = {
+    frost: "text-frost",
+    bone: "text-bone",
+    ignite: "text-ignite",
+  }[tone];
+
   return (
     <div className="rounded-xl border border-line bg-carbon-2 px-5 py-4">
       <div className="font-data text-[10px] uppercase tracking-[0.2em] text-steel">
         {label}
       </div>
-      <div
-        className={`mt-1.5 font-data text-2xl font-bold ${
-          tone === "frost" ? "text-frost" : "text-bone"
-        }`}
-      >
+      <div className={`mt-1.5 font-data text-2xl font-bold ${toneClass}`}>
         {value}
       </div>
     </div>
@@ -223,13 +227,17 @@ function CoachingBand() {
     <section className="bg-bone text-carbon">
       <div className="mx-auto w-full max-w-5xl px-5 py-20 sm:py-24">
         <h2 className="font-display text-[clamp(32px,6vw,64px)] leading-[0.92] font-black tracking-[-0.01em] uppercase">
-          Real athletes.
+          Measured for you.
           <br />
-          <span className="text-ignite">Real splits.</span>
+          <span className="text-ignite">Coached by a human.</span>
         </h2>
         <p className="mt-6 max-w-[56ch] text-base text-carbon/70 sm:text-lg">
-          Coaching built off your own race data — the splits you posted, the
-          station that leaked, the pace you actually hold under fatigue.
+          HYROX isn&apos;t a run and it isn&apos;t a lift, it&apos;s running on
+          legs the stations just wrecked. That&apos;s the skill most plans
+          ignore. We measure where you are today, model it against thousands of
+          finishes, and a real coach builds a week that trains you to move fast
+          through the stations and hold your pace on compromised legs, so you
+          arrive dialed in instead of hoping.
         </p>
         <Link
           href="/coaching"

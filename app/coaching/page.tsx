@@ -6,9 +6,6 @@ import Link from "next/link";
  * Same visual system as the landing page: Carbon page, Carbon-2 cards, --line
  * borders, Steel for muted copy, Bone for primary text. Ignite is reserved for
  * the book-a-call buttons and a single headline word. Frost is numbers only.
- *
- * NOTE: hero subhead, card copy and FAQ text below are placeholders standing in
- * for the real copy — matched to meaning, not final wording.
  */
 
 const BOOKING_URL = "https://calendar.app.google/Lp7pJNU8N9ZZtisYA";
@@ -17,84 +14,67 @@ const EYEBROW = "font-data text-[11px] uppercase tracking-[0.28em]";
 
 const AUDIENCE = [
   {
-    title: "Your first race",
-    body: "You've signed up, the date is real, and you'd rather not find out on the floor that you can't hold the sled. We build the base and rehearse the stations.",
+    title: "Your first HYROX",
+    body: "You signed up, now you need a map. We measure where you are and build the block that gets you to the line ready, not guessing.",
   },
   {
-    title: "Chasing a time",
-    body: "You've finished one and the number stuck with you. We work backwards from the target split by split and find where the minutes actually live.",
+    title: "Runners crossing over",
+    body: "Marathon and trail legs get you far. The stations are a different test. We build the strength and transitions your engine's missing.",
   },
   {
-    title: "Training hard, stuck",
-    body: "The volume is there and the finish time isn't moving. Usually that's one station quietly taxing everything after it — we find it and fix it.",
+    title: "Chasing a PR",
+    body: "You've raced before and want faster. We find the stations quietly costing you minutes and rebuild your training around them.",
   },
   {
-    title: "Back for a PB",
-    body: "You know the format and your own patterns. We sharpen the compromised running and the transitions, which is where experienced athletes leak most.",
+    title: "Stuck self-coaching",
+    body: "Training hard and plateaued. A coach reading your real splits sees the leak you can't, and fixes the week around it.",
   },
 ];
 
 const STEPS = [
   {
     n: "01",
-    title: "Take the quiz",
-    body: (
-      <>
-        Two minutes of honest inputs gives us a predicted finish range and a
-        read-out on all eight stations. Start with the{" "}
-        <Link
-          href="/quiz"
-          className="text-bone underline decoration-line underline-offset-4 transition hover:decoration-bone"
-        >
-          quiz
-        </Link>
-        .
-      </>
-    ),
+    title: "Book the call",
+    body: "A free 15-minute Race Time Review. Bring your quiz projection or last result. We find your biggest time leak together.",
   },
   {
     n: "02",
-    title: "Book a call",
-    body: "Fifteen minutes, no pitch deck. We walk through your splits, what you're training now, and whether coaching is even the right call for you.",
+    title: "Measure your baseline",
+    body: "In one session we capture your real station times, so your plan starts from data, not a guess.",
   },
   {
     n: "03",
-    title: "Get your plan",
-    body: "A block built off your own race data — the sessions, the loads, and the specific station we're targeting first, with the reasoning written out.",
-  },
-  {
-    n: "04",
-    title: "Execute",
-    body: "You train, we adjust. Check-ins on the sessions that matter, recalibration when the numbers move, and a race-week plan that isn't guesswork.",
+    title: "Train the gap",
+    body: "A coach builds your week around your weakest stations, your race date, and running strong on tired legs, adjusting as you go.",
   },
 ];
 
 const INCLUSIONS = [
-  "A predicted finish range and percentile against your division and age group",
-  "Station-by-station diagnosis, ranked by how much time each one is costing",
-  "A weekly training block with sessions, loads and target splits",
-  "Compromised-running work — the runs that actually decide your race",
-  "Transition and station technique notes for your weakest three",
-  "Recalibration as your numbers move, not a fixed twelve-week PDF",
-  "Race-week taper, fuelling and pacing plan",
+  "A baseline session that measures your real station times",
+  "A finish projection modeled against thousands of real races",
+  "A training plan periodized to your race date",
+  "Station work built around your biggest time leaks",
+  "Compromised-run training so you hold pace on tired legs",
+  "Roxzone and transition drills to stop bleeding time between stations",
+  "A human coach who adjusts the plan as your numbers change",
 ];
 
 const FAQS = [
   {
-    q: "Do I need a race booked?",
-    a: "No. A date sharpens the plan and gives us something to work backwards from, but plenty of athletes start building before they commit to one.",
+    q: "I've never done a HYROX. Too advanced for me?",
+    a: "No. Most people I coach are training for their first. Measuring your baseline is how I meet you exactly where you are, then build from there.",
   },
   {
-    q: "What if I don't know my station splits?",
-    a: "That's normal and it's fine. The quiz estimates the ones you skip and widens your predicted range accordingly — we tighten it as real numbers come in.",
+    q: "Do I need to know my station times first?",
+    a: "Not at all. You'll know your run and your paces; the stations are new for most first-timers. We measure them together in the first session, and that's what the plan is built on.",
   },
   {
-    q: "Do I need a gym with HYROX equipment?",
-    a: "It helps, but it isn't required. We substitute where we have to and make sure the stations you can't rehearse get covered another way.",
+    q: "How is this different from a generic plan?",
+    a: "A template gives everyone the same twelve weeks. Yours starts from your measured numbers and gets adjusted by a human as they change. If the row's your weak spot, your plan looks nothing like someone whose weak spot is the sled.",
   },
   {
-    q: "How is this different from a template?",
-    a: "A template doesn't know which station is bleeding your minutes. Everything here starts from your own splits, and the plan changes when they do.",
+    q: "What happens on the free call?",
+    a: "Fifteen minutes to look at where your training stands and whether coaching makes sense. We talk through your biggest time leak and what's realistic for your next race. No pitch you sit through. If it's a fit, I'll walk you through the plan. If not, you'll leave with a clear next step.",
   },
 ];
 
@@ -176,15 +156,18 @@ function Nav() {
 function Hero() {
   return (
     <section className="mx-auto w-full max-w-5xl px-5 pt-16 pb-14 sm:pt-24 sm:pb-20">
-      <p className={`${EYEBROW} text-ignite`}>HYROX Coaching</p>
+      <p className={`${EYEBROW} text-ignite`}>Coaching, not templates</p>
       <h1 className="mt-6 font-display text-[clamp(38px,8.5vw,86px)] leading-[0.88] font-black tracking-[-0.02em] uppercase text-bone">
-        Coaching built off{" "}
-        <span className="text-ignite">your splits.</span>
+        Trained to run
+        <br />
+        <span className="text-ignite">on wrecked legs.</span>
       </h1>
       <p className="mt-7 max-w-[54ch] text-base text-bone/80 sm:text-lg">
-        We start from your real race data, not a generic template. The plan
-        targets the station bleeding your minutes first, because that's where
-        the finish time actually moves.
+        Your quiz number told you where you stand. This is how we move it. We
+        measure your real station times, model your finish against thousands of
+        races, and a coach builds a week that saves seconds at every station and
+        teaches your legs to keep running when they&apos;re cooked. First HYROX
+        or your fifth, the plan starts from your numbers, not a template.
       </p>
       <BookButton className="mt-9 px-6 py-4 text-sm" />
     </section>
