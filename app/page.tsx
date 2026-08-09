@@ -54,12 +54,12 @@ function Nav() {
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-5 sm:gap-6 sm:py-6">
         <Link href="/" aria-label="Hyrox Human — home" className="shrink-0">
           <Image
-            src="/logos/svg/03-lockup-ondark.svg"
+            src="/logo-banner.png"
             alt="Hyrox Human"
-            width={117}
-            height={44}
+            width={3000}
+            height={495}
             priority
-            className="h-9 w-auto sm:h-11"
+            className="h-9 w-auto md:h-11"
           />
         </Link>
         {/* Nav labels drop off on narrow screens — the CTA carries the flow there. */}

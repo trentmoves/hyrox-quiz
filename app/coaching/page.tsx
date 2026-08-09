@@ -133,18 +133,25 @@ function Nav() {
   return (
     <header className="border-b border-line">
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-5 py-5 sm:gap-6 sm:py-6">
+        {/* The 6:1 banner and the booking button can't both fit at 375px, so
+            below md this header wears the square monogram instead. */}
         <Link href="/" aria-label="Hyrox Human — home" className="shrink-0">
           <Image
-            src="/logos/svg/03-lockup-ondark.svg"
+            src="/logos/svg/02-pulse-mark-ondark.svg"
             alt="Hyrox Human"
-            width={117}
-            height={44}
+            width={101}
+            height={105}
+            className="h-9 w-auto md:hidden"
+          />
+          <Image
+            src="/logo-banner.png"
+            alt="Hyrox Human"
+            width={3000}
+            height={495}
             priority
-            className="h-9 w-auto sm:h-11"
+            className="hidden h-11 w-auto md:block"
           />
         </Link>
-        {/* Tighter padding on mobile so the larger logo and the button never
-            collide at 375px — the logo keeps its size, the button gives. */}
         <BookButton className="shrink-0 px-3 py-2.5 text-[11px] whitespace-nowrap sm:px-4 sm:text-xs" />
       </nav>
     </header>
