@@ -84,10 +84,7 @@ function Nav() {
 function Hero() {
   return (
     <section className="mx-auto w-full max-w-5xl px-5 pt-16 pb-12 sm:pt-24 sm:pb-16">
-      <p className="font-data text-[11px] uppercase tracking-[0.28em] text-ignite">
-        Faster on tired legs
-      </p>
-      <h1 className="mt-6 font-display text-[clamp(46px,11vw,112px)] leading-[0.86] font-black tracking-[-0.02em] uppercase text-bone">
+      <h1 className="font-display text-[clamp(46px,11vw,112px)] leading-[0.86] font-black tracking-[-0.02em] uppercase text-bone">
         Human coaching,
         <br />
         <span className="text-ignite">engineered by data.</span>
