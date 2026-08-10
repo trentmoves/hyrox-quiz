@@ -11,7 +11,6 @@ import Link from "next/link";
 
 const NAV_LINKS = [
   { label: "The Method", href: "#how-it-works" },
-  { label: "Coaching", href: "/coaching" },
   { label: "The Quiz", href: "/quiz" },
 ];
 
@@ -198,10 +197,10 @@ function CoachingBand() {
           arrive dialed in instead of hoping.
         </p>
         <Link
-          href="/coaching"
+          href="/quiz"
           className="mt-9 inline-flex items-center gap-2.5 rounded-lg border-2 border-carbon px-6 py-4 font-display text-sm font-extrabold uppercase tracking-[0.04em] text-carbon transition hover:bg-carbon hover:text-bone"
         >
-          See the plan
+          Predict my finish →
         </Link>
       </div>
     </section>
