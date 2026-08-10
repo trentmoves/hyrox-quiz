@@ -9,11 +9,6 @@ import Link from "next/link";
  * every number is set in Space Mono.
  */
 
-const NAV_LINKS = [
-  { label: "The Method", href: "#how-it-works" },
-  { label: "The Quiz", href: "/quiz" },
-];
-
 const STEPS = [
   {
     n: "01",
@@ -61,19 +56,6 @@ function Nav() {
             className="h-9 w-auto md:h-11"
           />
         </Link>
-        {/* Nav labels drop off on narrow screens — the CTA carries the flow there. */}
-        <ul className="hidden items-center gap-7 sm:flex">
-          {NAV_LINKS.map((l) => (
-            <li key={l.label}>
-              <Link
-                href={l.href}
-                className="font-data text-[11px] uppercase tracking-[0.2em] text-steel transition hover:text-bone"
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </nav>
     </header>
   );
