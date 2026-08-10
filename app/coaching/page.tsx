@@ -318,7 +318,7 @@ function Footer() {
     <footer className="border-t border-line bg-carbon-2">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-5 py-10 font-data text-[11px] uppercase tracking-[0.16em] text-steel sm:flex-row sm:items-center sm:justify-between">
         <span>Hyrox Human</span>
-        <span>@hyroxhuman</span>
+        <span>@hybridhercules</span>
       </div>
     </footer>
   );
